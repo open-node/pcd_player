@@ -7,10 +7,11 @@ const arr = fs
   .toString()
   .trim()
   .split("\n");
-const header = arr
-  .slice(0, 11)
-  .map(x => x.trim())
-  .join("\n");
+const header = arr.slice(0, 11).map(x => x.trim());
+header[2] += " rgb";
+header[3] += " 4";
+header[4] += " U";
+header[5] += " 1";
 const data = arr.slice(11);
 data.forEach(
   (x, i) =>
@@ -37,9 +38,12 @@ data.forEach((x, i) => {
     Math.round((data[i][0] * 10000000) / range[0]) / 10000000,
     Math.round((data[i][1] * 10000000) / range[1]) / 10000000,
     Math.round((data[i][2] * 10000000) / range[2]) / 10000000,
-    0x0f0f0f + Math.round((0xf0f0f0 * data[i][2]) / range[2])
+    0x0000ff +
+      Math.round(
+        ((0xff0000 - 0x0000ff) * (data[i][2] - limit[2][0])) / range[2]
+      )
   ].join(" ");
 });
 
-console.log(header);
+console.log(header.join("\n"));
 console.log(data.join("\n"));
