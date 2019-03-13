@@ -33,11 +33,12 @@ for (const x of data) {
 const range = limit.map(x => Math.floor(x[1] - x[0] + 10));
 // console.log(limit);
 
+const max = Math.max(...range);
 data.forEach((x, i) => {
   data[i] = [
-    Math.round((data[i][0] * 10000000) / range[0]) / 10000000,
-    Math.round((data[i][1] * 10000000) / range[1]) / 10000000,
-    Math.round((data[i][2] * 10000000) / range[2]) / 10000000,
+    Math.round((data[i][0] * 10000000) / max) / 10000000,
+    Math.round((data[i][1] * 10000000) / max) / 10000000,
+    Math.round((data[i][2] * 10000000) / max) / 10000000,
     0x0000ff +
       Math.round(
         ((0xff0000 - 0x0000ff) * (data[i][2] - limit[2][0])) / range[2]
