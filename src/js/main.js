@@ -2,6 +2,7 @@ if (WEBGL.isWebGLAvailable() === false) {
   document.body.appendChild(WEBGL.getWebGLErrorMessage());
 }
 
+let skip = 0;
 var container, stats;
 var camera, controls, scene, renderer;
 
@@ -93,6 +94,9 @@ function keyboard(ev) {
 
 function animate() {
   requestAnimationFrame(animate);
+  skip += 1;
+  if (skip % 3) return;
+  skip = 0;
   controls.update();
   renderer.render(scene, camera);
   stats.update();
