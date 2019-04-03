@@ -6,6 +6,7 @@ let skip = 0;
 var container, stats;
 var camera, controls, scene, renderer;
 
+const file = location.search.slice(1) || "mohao4.pcd";
 init();
 animate();
 function init() {
@@ -45,7 +46,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   var loader = new THREE.PCDLoader();
-  loader.load("../pcds/mohao4.pcd", function(points) {
+  loader.load(`./pcds/${file}`, function(points) {
     scene.add(points);
     var center = points.geometry.boundingSphere.center;
     controls.target.set(center.x, center.y, center.z);
@@ -72,7 +73,7 @@ function onWindowResize() {
 }
 
 function keyboard(ev) {
-  var points = scene.getObjectByName("mohao4.pcd");
+  var points = scene.getObjectByName(file);
 
   switch (ev.key || String.fromCharCode(ev.keyCode || ev.charCode)) {
     case "+":
