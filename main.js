@@ -96,7 +96,7 @@ function keyboard(ev) {
 function animate() {
   requestAnimationFrame(animate);
   skip += 1;
-  if (skip % 3) return;
+  if (skip % 2) return;
   skip = 0;
   controls.update();
   renderer.render(scene, camera);

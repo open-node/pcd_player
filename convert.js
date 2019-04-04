@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const fs = require("fs");
+const color = require("color");
 
 const arr = fs
   .readFileSync(process.argv[2])
@@ -31,16 +32,22 @@ for (const x of data) {
 }
 
 const range = limit.map(x => Math.floor(x[1] - x[0]));
-// console.log(limit);
+/*
+ console.log(limit);
+ console.log(range);
+ process.exit();
+*/
 
 const max = Math.max(...range);
 data.forEach((x, i) => {
-  const color = Math.round((256 * (data[i][2] - limit[2][0])) / range[2]);
+  const c =
+    266 -
+    Math.floor((266 * 10000 * (data[i][2] - limit[2][0])) / range[2]) / 10000;
   data[i] = [
     Math.round((data[i][0] * 10000000) / max) / 10000000,
     Math.round((data[i][1] * 10000000) / max) / 10000000,
     Math.round((data[i][2] * 10000000) / max) / 10000000,
-    (color << 16) + (color << 8) + color
+    color.hsl(c, 80, 60).rgbNumber()
   ].join(" ");
 });
 
