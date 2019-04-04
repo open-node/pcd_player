@@ -23,19 +23,26 @@ data.forEach(
 );
 
 // const range = [1200, 1200, 110];
-const limit = [[0, 0], [0, 0], [0, 0]];
+const limit = [
+  [Infinity, -Infinity],
+  [Infinity, -Infinity],
+  [Infinity, -Infinity]
+];
+const set = new Set();
 for (const x of data) {
   for (let i = 0; i < 3; i += 1) {
     limit[i][0] = Math.min(limit[i][0], x[i]);
     limit[i][1] = Math.max(limit[i][1], x[i]);
   }
+  // set.add(x[2]);
 }
 
 const range = limit.map(x => Math.floor(x[1] - x[0]));
 /*
- console.log(limit);
- console.log(range);
- process.exit();
+console.log(limit);
+console.log(range);
+console.log(set);
+process.exit();
 */
 
 const max = Math.max(...range);
