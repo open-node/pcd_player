@@ -46,7 +46,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   var loader = new THREE.PCDLoader();
-  loader.load(`./pcds/${file}`, function(points) {
+  loader.load(`/pcds/${file}`, function(points) {
     scene.add(points);
     var center = points.geometry.boundingSphere.center;
     controls.target.set(center.x, center.y, center.z);
@@ -73,7 +73,8 @@ function onWindowResize() {
 }
 
 function keyboard(ev) {
-  var points = scene.getObjectByName(file);
+  const filename = file.split("/").pop();
+  var points = scene.getObjectByName(filename);
 
   switch (ev.key || String.fromCharCode(ev.keyCode || ev.charCode)) {
     case "+":
