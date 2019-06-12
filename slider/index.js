@@ -7,9 +7,10 @@
  *   process: 5 * 1000, // 切换过程时长, 毫秒
  *   times: 20, // 切换过程次数，越大则切换效果越平滑，但是消耗的计算资源也越大，反之则越顿挫
  *   container: element, // 展示容器 dom 节点
+ *   getImgSrc: function // 获取展示图片地址的函数
  * }
  */
-const Slider = ({ width, height, interval, process, container }) => {
+const Slider = ({ width, height, interval, process, container, getImgSrc }) => {
   if (!container || !container.appendChild) throw Error(`指定容器不存在`);
   width = Math.max(+width, 0) || 600;
   height = Math.max(+height, 0) || 400;
@@ -28,6 +29,7 @@ const Slider = ({ width, height, interval, process, container }) => {
 
   // 执行过渡效果
   const slide = (i, remainMS) => {
+    if (times <= i + 1) return setTimeout(drawNextImage, interval);
     const y = dy * i;
     const imgData = bg.getImageData(0, y, width, dy);
     const timeout = Math.floor(remainMS / (times - i));
@@ -48,7 +50,7 @@ const Slider = ({ width, height, interval, process, container }) => {
   };
 
   // 初始化第一张图片
-  const Init = getImgSrc => {
+  const Init = () => {
     const img = new Image();
     img.onload = () => {
       fg.drawImage(img, 0, 0);
@@ -58,13 +60,7 @@ const Slider = ({ width, height, interval, process, container }) => {
     setTimeout(drawNextImage, interval);
   };
 
-  // 暂停
-  Init.pause = () => {};
-
-  // 继续
-  Init.resume = () => {};
-
-  return Init;
+  Init();
 };
 
 module.exports = Slider;
